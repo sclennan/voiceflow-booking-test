@@ -307,10 +307,12 @@
               );
 
 
-            button.disabled = true;
+    button.disabled = true;
+button.textContent = "Search ready ✓";
 
-            button.textContent =
-              "Loading...";
+form.querySelectorAll("input, select").forEach((field) => {
+  field.disabled = true;
+});
 
 
             window.voiceflow.chat.interact({
