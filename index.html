@@ -3,29 +3,142 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Voiceflow Booking Test</title>
+  <title>Hotel Victoria Lauberhorn | Digital Concierge</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background: #f5f5f5;
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(
+          rgba(18, 27, 24, 0.48),
+          rgba(18, 27, 24, 0.62)
+        ),
+        url("https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=2000&q=85");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    .hero {
+      width: 100%;
+      max-width: 780px;
+      text-align: center;
+      padding: 56px 42px;
+      border-radius: 28px;
+      background: rgba(20, 30, 27, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+    }
+
+    .eyebrow {
+      margin-bottom: 16px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.82;
     }
 
     h1 {
-      font-size: 28px;
+      margin: 0;
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: 1.02;
+      font-weight: 650;
+      letter-spacing: -0.04em;
     }
 
-    p {
-      color: #555;
+    .subtitle {
+      max-width: 580px;
+      margin: 24px auto 0;
+      font-size: 18px;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .concierge-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 32px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.94);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #bde7c6;
+      box-shadow: 0 0 0 5px rgba(189, 231, 198, 0.12);
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.62);
+    }
+
+    @media (max-width: 600px) {
+      .page-shell {
+        padding: 18px;
+      }
+
+      .hero {
+        padding: 40px 22px;
+        border-radius: 22px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <h1>Voiceflow Booking Test</h1>
-  <p>Open the chat and ask: “I want to book a room.”</p>
+  <main class="page-shell">
+    <section class="hero">
+      <div class="eyebrow">Wengen · Switzerland</div>
+
+      <h1>Hotel Victoria Lauberhorn</h1>
+
+      <p class="subtitle">
+        Your digital concierge for rooms, dining, spa, arrival information,
+        local recommendations and reservations.
+      </p>
+
+      <div class="concierge-note">
+        <span class="status-dot"></span>
+        Open the chat to speak with Carven
+      </div>
+
+      <div class="footer-note">
+        Available anytime for hotel information and guest support.
+      </div>
+    </section>
+  </main>
 
 
   <script>
