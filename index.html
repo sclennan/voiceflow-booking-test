@@ -141,310 +141,112 @@
   </main>
 
 
+     };
+  </script>
+
   <script>
-    const RoomBookingFormExtension = {
-      name: "RoomBookingForm",
+    const BookingLinkExtension = {
+      name: "BookingLink",
       type: "response",
 
       match: ({ trace }) =>
-        trace.type === "room_booking_form" ||
-        trace.payload?.name === "room_booking_form",
+        trace.type === "BOOKING_LINK",
 
       render: ({ trace, element }) => {
+        const url = trace.payload?.url;
 
-        const form = document.createElement("form");
+        if (!url) return;
 
-        form.innerHTML = `
+        const wrapper = document.createElement("div");
+
+        wrapper.innerHTML = `
           <style>
-
-            .booking-card {
+            .rates-card {
               width: 100%;
               box-sizing: border-box;
-              background: white;
-              border: 1px solid #e3e3e3;
-              border-radius: 14px;
-              padding: 16px;
+              padding: 18px;
+              background: #ffffff;
+              border: 1px solid rgba(20, 20, 20, 0.08);
+              border-radius: 16px;
+              box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.03),
+                0 8px 24px rgba(0, 0, 0, 0.06);
               font-family: inherit;
             }
 
-            .booking-title {
-              font-size: 18px;
-              font-weight: 600;
-              margin-bottom: 16px;
+            .rates-card-title {
+              margin: 0 0 6px;
+              font-size: 17px;
+              line-height: 1.3;
+              font-weight: 650;
+              color: #171717;
             }
 
-            .booking-grid {
-              display: grid;
-              grid-template-columns: 1fr 1fr;
-              gap: 12px;
+            .rates-card-text {
+              margin: 0 0 16px;
+              font-size: 13.5px;
+              line-height: 1.55;
+              color: #686868;
             }
 
-            .booking-field {
+            .rates-card-button {
               display: flex;
-              flex-direction: column;
-              gap: 6px;
-            }
-
-            .booking-field label {
-              font-size: 13px;
-              font-weight: 600;
-            }
-
-            .booking-field input,
-            .booking-field select {
+              align-items: center;
+              justify-content: space-between;
               width: 100%;
               box-sizing: border-box;
-              padding: 10px;
-              border: 1px solid #ccc;
-              border-radius: 8px;
-              background: white;
-              font: inherit;
-            }
-
-            .child-ages {
-              margin-top: 12px;
-            }
-
-            .booking-button {
-              width: 100%;
-              margin-top: 16px;
-              padding: 12px;
-              border: none;
+              padding: 13px 15px;
               border-radius: 10px;
-              font: inherit;
+              background: #1f1f1f;
+              color: #ffffff !important;
+              text-decoration: none;
+              font-size: 13.5px;
               font-weight: 600;
-              cursor: pointer;
+              transition:
+                transform 150ms ease,
+                box-shadow 150ms ease,
+                background 150ms ease;
             }
 
+            .rates-card-button:hover {
+              background: #2b2b2b;
+              transform: translateY(-1px);
+              box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            }
+
+            .rates-card-arrow {
+              font-size: 16px;
+              line-height: 1;
+              transition: transform 150ms ease;
+            }
+
+            .rates-card-button:hover .rates-card-arrow {
+              transform: translateX(3px);
+            }
           </style>
 
-
-          <div class="booking-card">
-
-            <div class="booking-title">
-              Check availability
+          <div class="rates-card">
+            <div class="rates-card-title">
+              Rooms &amp; rates
             </div>
 
-
-            <div class="booking-grid">
-
-              <div class="booking-field">
-                <label>Check-in</label>
-                <input
-                  type="date"
-                  name="checkin"
-                  required
-                />
-              </div>
-
-
-              <div class="booking-field">
-                <label>Check-out</label>
-                <input
-                  type="date"
-                  name="checkout"
-                  required
-                />
-              </div>
-
-
-              <div class="booking-field">
-                <label>Adults</label>
-
-                <select name="adults">
-                  <option value="1">1</option>
-                  <option value="2" selected>2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
-
-              </div>
-
-
-              <div class="booking-field">
-                <label>Children</label>
-
-                <select name="children">
-                  <option value="0" selected>0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                </select>
-
-              </div>
-
+            <div class="rates-card-text">
+              View the available rooms and current rates for your selected dates.
             </div>
 
-
-            <div class="child-ages"></div>
-
-
-            <button
-              type="submit"
-              class="booking-button"
+            <a
+              class="rates-card-button"
+              href="${url}"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              View rooms & rates
-            </button>
-
+              <span>View rooms &amp; rates</span>
+              <span class="rates-card-arrow">→</span>
+            </a>
           </div>
         `;
 
-
-        const childrenSelect =
-          form.querySelector('[name="children"]');
-
-        const childAgesContainer =
-          form.querySelector(".child-ages");
-
-
-        function renderChildAges() {
-
-          const count =
-            Number(childrenSelect.value);
-
-          childAgesContainer.innerHTML = "";
-
-
-          if (count === 0) return;
-
-
-          const grid =
-            document.createElement("div");
-
-          grid.className = "booking-grid";
-
-
-          for (let i = 0; i < count; i++) {
-
-            const field =
-              document.createElement("div");
-
-            field.className =
-              "booking-field";
-
-
-            const label =
-              document.createElement("label");
-
-            label.textContent =
-              `Child ${i + 1} age`;
-
-
-            const select =
-              document.createElement("select");
-
-            select.name =
-              `child_age_${i}`;
-
-
-            for (let age = 0; age <= 17; age++) {
-
-              const option =
-                document.createElement("option");
-
-              option.value =
-                String(age);
-
-              option.textContent =
-                String(age);
-
-              select.appendChild(option);
-            }
-
-
-            field.appendChild(label);
-
-            field.appendChild(select);
-
-            grid.appendChild(field);
-          }
-
-
-          childAgesContainer.appendChild(grid);
-        }
-
-
-        childrenSelect.addEventListener(
-          "change",
-          renderChildAges
-        );
-
-
-        form.addEventListener(
-          "submit",
-          (event) => {
-
-            event.preventDefault();
-
-
-            const checkin =
-              form.querySelector(
-                '[name="checkin"]'
-              ).value;
-
-
-            const checkout =
-              form.querySelector(
-                '[name="checkout"]'
-              ).value;
-
-
-            const adults =
-              form.querySelector(
-                '[name="adults"]'
-              ).value;
-
-
-            const ageFields =
-              form.querySelectorAll(
-                '[name^="child_age_"]'
-              );
-
-
-            const childrenAges =
-              Array.from(ageFields).map(
-                field => field.value
-              );
-
-
-            if (!checkin || !checkout) {
-              return;
-            }
-
-
-            const button =
-              form.querySelector(
-                ".booking-button"
-              );
-
-
-    button.disabled = true;
-button.textContent = "Search ready ✓";
-
-form.querySelectorAll("input, select").forEach((field) => {
-  field.disabled = true;
-});
-
-
-            window.voiceflow.chat.interact({
-              type: "room_booking_submitted",
-
-              payload: {
-                checkin: checkin,
-                checkout: checkout,
-                adults: adults,
-                children_ages:
-                  childrenAges.join(",")
-              }
-            });
-
-          }
-        );
-
-
-        element.appendChild(form);
+        element.appendChild(wrapper);
       }
     };
   </script>
@@ -476,28 +278,29 @@ form.querySelectorAll("input, select").forEach((field) => {
           },
 
           assistant: {
-            extensions: [
-              RoomBookingFormExtension
-            ]
-          }
+  extensions: [
+    RoomBookingFormExtension,
+    BookingLinkExtension
+  ]
+}
 
-        });
+});
 
-      };
-
-
-      v.src =
-        "https://cdn.voiceflow.com/widget-next/bundle.mjs";
-
-      v.type =
-        "text/javascript";
-
-      s.parentNode.insertBefore(v, s);
+};
 
 
-    })(document, "script");
+v.src =
+  "https://cdn.voiceflow.com/widget-next/bundle.mjs";
 
-  </script>
+v.type =
+  "text/javascript";
+
+s.parentNode.insertBefore(v, s);
+
+
+})(document, "script");
+
+</script>
 
 </body>
 </html>
