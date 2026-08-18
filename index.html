@@ -132,7 +132,6 @@
 <body>
 
   <main class="page-shell">
-
     <section class="hero">
 
       <div class="eyebrow">
@@ -158,18 +157,15 @@
       </div>
 
     </section>
-
   </main>
 
 
-  <!-- ===================================================== -->
-  <!-- ROOM BOOKING FORM EXTENSION -->
-  <!-- ===================================================== -->
+  <!-- =============================================== -->
+  <!-- CHECK AVAILABILITY FORM -->
+  <!-- =============================================== -->
 
   <script>
-
     const RoomBookingFormExtension = {
-
       name: "RoomBookingForm",
       type: "response",
 
@@ -184,178 +180,188 @@
         form.innerHTML = `
           <style>
 
-  .booking-card {
-    width: 100%;
-    box-sizing: border-box;
-    background: linear-gradient(145deg, #ffffff 0%, #fafaf9 100%);
-    border: 1px solid rgba(20, 20, 20, 0.08);
-    border-radius: 18px;
-    padding: 20px;
-    font-family: inherit;
+            .booking-card {
+              width: 100%;
+              box-sizing: border-box;
 
-    box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.03),
-      0 8px 24px rgba(0, 0, 0, 0.06);
-  }
+              background:
+                linear-gradient(
+                  145deg,
+                  #ffffff 0%,
+                  #fcfcfb 100%
+                );
 
+              border: 1px solid rgba(25, 30, 35, 0.10);
+              border-radius: 18px;
 
-  .booking-title {
-    margin: 0 0 20px;
-    font-size: 18px;
-    line-height: 1.3;
-    font-weight: 650;
-    letter-spacing: -0.02em;
-    color: #171717;
-  }
+              padding: 20px;
 
+              font-family: inherit;
 
-  .booking-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px 12px;
-  }
+              box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.02),
+                0 8px 20px rgba(0, 0, 0, 0.04);
+            }
 
 
-  .booking-field {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    min-width: 0;
-  }
+            .booking-title {
+              margin: 0 0 20px;
+
+              font-size: 18px;
+              line-height: 1.3;
+              font-weight: 650;
+
+              letter-spacing: -0.015em;
+
+              color: #252a31;
+            }
 
 
-  .booking-field label {
-    font-size: 12.5px;
-    line-height: 1.3;
-    font-weight: 600;
-    color: #343434;
-  }
+            .booking-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 16px 12px;
+            }
 
 
-  .booking-field input,
-  .booking-field select {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-
-    height: 44px;
-    padding: 0 12px;
-
-    border: 1px solid rgba(20, 20, 20, 0.13);
-    border-radius: 10px;
-
-    background: #ffffff;
-    color: #202020;
-
-    font: inherit;
-    font-size: 13px;
-
-    outline: none;
-
-    transition:
-      border-color 150ms ease,
-      box-shadow 150ms ease,
-      background 150ms ease;
-  }
+            .booking-field {
+              display: flex;
+              flex-direction: column;
+              gap: 7px;
+              min-width: 0;
+            }
 
 
-  .booking-field input:hover,
-  .booking-field select:hover {
-    border-color: rgba(20, 20, 20, 0.23);
-  }
+            .booking-field label {
+              font-size: 12.5px;
+              line-height: 1.3;
+              font-weight: 600;
+
+              color: #343a42;
+            }
 
 
-  .booking-field input:focus,
-  .booking-field select:focus {
-    border-color: #1f1f1f;
+            .booking-field input,
+            .booking-field select {
+              width: 100%;
+              min-width: 0;
+              height: 44px;
 
-    box-shadow:
-      0 0 0 3px rgba(31, 31, 31, 0.08);
-  }
+              box-sizing: border-box;
 
+              padding: 0 12px;
 
-  .booking-field input:disabled,
-  .booking-field select:disabled {
-    background: #f6f6f4;
-    color: #8d8d89;
-    cursor: not-allowed;
-  }
+              border: 1px solid #d6d8da;
+              border-radius: 10px;
 
+              background: #ffffff;
 
-  .child-ages {
-    margin-top: 14px;
-  }
+              color: #363b42;
 
+              font: inherit;
+              font-size: 13px;
 
-  .booking-button {
-    width: 100%;
-    box-sizing: border-box;
+              outline: none;
 
-    margin-top: 18px;
-    padding: 13px 15px;
-
-    border: none;
-    border-radius: 10px;
-
-    background: #1f1f1f;
-    color: #ffffff;
-
-    font: inherit;
-    font-size: 13.5px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-      transform 150ms ease,
-      box-shadow 150ms ease,
-      background 150ms ease;
-  }
+              transition:
+                border-color 150ms ease,
+                box-shadow 150ms ease,
+                background 150ms ease;
+            }
 
 
-  .booking-button:hover:not(:disabled) {
-    background: #2b2b2b;
-    transform: translateY(-1px);
-
-    box-shadow:
-      0 6px 16px rgba(0, 0, 0, 0.12);
-  }
+            .booking-field input:hover,
+            .booking-field select:hover {
+              border-color: #c3c6c9;
+            }
 
 
-  .booking-button:active:not(:disabled) {
-    transform: translateY(0);
-  }
+            .booking-field input:focus,
+            .booking-field select:focus {
+              border-color: #aeb2b7;
+
+              box-shadow:
+                0 0 0 3px rgba(80, 88, 98, 0.06);
+            }
 
 
-  .booking-button:disabled {
-    background: #ececea;
-    color: #8f8f8b;
-    cursor: default;
-    box-shadow: none;
-  }
+            .booking-field input:disabled,
+            .booking-field select:disabled {
+              background: #f5f5f4;
+              color: #999da1;
+            }
 
 
-  @media (max-width: 430px) {
+            .child-ages {
+              margin-top: 14px;
+            }
 
-    .booking-card {
-      padding: 17px;
-      border-radius: 16px;
-    }
 
-    .booking-grid {
-      gap: 12px 10px;
-    }
+            .booking-button {
+              width: 100%;
+              box-sizing: border-box;
 
-    .booking-field input,
-    .booking-field select {
-      height: 42px;
-      padding: 0 10px;
-      font-size: 12.5px;
-    }
+              margin-top: 20px;
+              padding: 12px 14px;
 
-  }
+              border: none;
+              border-radius: 10px;
 
-</style>
+              background: #dedfe1;
+              color: #343a42;
+
+              font: inherit;
+              font-size: 14px;
+              font-weight: 600;
+
+              cursor: pointer;
+
+              transition:
+                background 150ms ease,
+                transform 150ms ease;
+            }
+
+
+            .booking-button:hover:not(:disabled) {
+              background: #d5d6d8;
+              transform: translateY(-1px);
+            }
+
+
+            .booking-button:active:not(:disabled) {
+              transform: translateY(0);
+            }
+
+
+            .booking-button:disabled {
+              background: #dedfe1;
+              color: #92969b;
+              cursor: default;
+              transform: none;
+            }
+
+
+            @media (max-width: 430px) {
+
+              .booking-card {
+                padding: 18px;
+                border-radius: 16px;
+              }
+
+              .booking-grid {
+                gap: 14px 10px;
+              }
+
+              .booking-field input,
+              .booking-field select {
+                height: 42px;
+                padding: 0 10px;
+                font-size: 12.5px;
+              }
+
+            }
+
+          </style>
 
 
           <div class="booking-card">
@@ -542,6 +548,7 @@
                 String(age);
 
               select.appendChild(option);
+
             }
 
 
@@ -550,10 +557,12 @@
             field.appendChild(select);
 
             grid.appendChild(field);
+
           }
 
 
           childAgesContainer.appendChild(grid);
+
         }
 
 
@@ -662,35 +671,26 @@
       }
 
     };
-
   </script>
 
 
-  <!-- ===================================================== -->
-  <!-- PREMIUM ROOMS & RATES LINK EXTENSION -->
-  <!-- ===================================================== -->
+  <!-- =============================================== -->
+  <!-- ROOMS & RATES LINK -->
+  <!-- ORIGINAL SIMPLE VOICEFLOW-STYLE LOOK -->
+  <!-- =============================================== -->
 
   <script>
-
     const BookingLinkExtension = {
-
-      name:
-        "BookingLink",
-
-      type:
-        "response",
-
+      name: "BookingLink",
+      type: "response",
 
       match: ({ trace }) =>
-        trace.type ===
-        "BOOKING_LINK",
-
+        trace.type === "BOOKING_LINK",
 
       render: ({ trace, element }) => {
 
         const url =
           trace.payload?.url;
-
 
         if (!url) {
           return;
@@ -708,140 +708,60 @@
               width: 100%;
               box-sizing: border-box;
 
-              padding: 18px;
+              padding: 16px;
 
-              background:
-                linear-gradient(
-                  145deg,
-                  #ffffff 0%,
-                  #fafaf9 100%
-                );
+              border-radius: 14px;
 
-              border:
-                1px solid rgba(20, 20, 20, 0.08);
-
-              border-radius: 16px;
-
-              box-shadow:
-                0 1px 2px rgba(0, 0, 0, 0.03),
-                0 8px 24px rgba(0, 0, 0, 0.06);
+              background: #f1f1f1;
 
               font-family: inherit;
             }
 
 
             .rates-card-title {
-              margin:
-                0 0 6px;
+              margin-bottom: 8px;
 
-              font-size:
-                17px;
+              font-size: 18px;
+              font-weight: 600;
 
-              line-height:
-                1.3;
-
-              font-weight:
-                650;
-
-              color:
-                #171717;
+              color: #252a31;
             }
 
 
             .rates-card-text {
-              margin:
-                0 0 16px;
+              margin-bottom: 14px;
 
-              font-size:
-                13.5px;
+              font-size: 15px;
+              line-height: 1.45;
 
-              line-height:
-                1.55;
-
-              color:
-                #686868;
+              color: #49515d;
             }
 
 
             .rates-card-button {
-              display:
-                flex;
+              display: block;
 
-              align-items:
-                center;
+              width: 100%;
+              box-sizing: border-box;
 
-              justify-content:
-                space-between;
+              padding: 11px 14px;
 
-              width:
-                100%;
+              border-radius: 9px;
 
-              box-sizing:
-                border-box;
+              background: #dedfe1;
 
-              padding:
-                13px 15px;
+              color: #343a42 !important;
 
-              border-radius:
-                10px;
+              text-align: center;
+              text-decoration: none;
 
-              background:
-                #1f1f1f;
-
-              color:
-                #ffffff !important;
-
-              text-decoration:
-                none;
-
-              font-size:
-                13.5px;
-
-              font-weight:
-                600;
-
-              transition:
-                transform 150ms ease,
-                box-shadow 150ms ease,
-                background 150ms ease;
+              font-size: 15px;
+              font-weight: 600;
             }
 
 
             .rates-card-button:hover {
-
-              background:
-                #2b2b2b;
-
-              transform:
-                translateY(-1px);
-
-              box-shadow:
-                0 6px 16px
-                rgba(0, 0, 0, 0.12);
-
-            }
-
-
-            .rates-card-arrow {
-
-              font-size:
-                16px;
-
-              line-height:
-                1;
-
-              transition:
-                transform 150ms ease;
-
-            }
-
-
-            .rates-card-button:hover
-            .rates-card-arrow {
-
-              transform:
-                translateX(3px);
-
+              background: #d5d6d8;
             }
 
           </style>
@@ -865,15 +785,7 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-
-              <span>
-                View rooms &amp; rates
-              </span>
-
-              <span class="rates-card-arrow">
-                →
-              </span>
-
+              View rooms &amp; rates
             </a>
 
           </div>
@@ -885,13 +797,12 @@
       }
 
     };
-
   </script>
 
 
-  <!-- ===================================================== -->
-  <!-- VOICEFLOW WIDGET -->
-  <!-- ===================================================== -->
+  <!-- =============================================== -->
+  <!-- VOICEFLOW -->
+  <!-- =============================================== -->
 
   <script type="text/javascript">
 
