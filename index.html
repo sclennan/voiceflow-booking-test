@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Hotel Victoria Lauberhorn | Digital Concierge</title>
 
   <style>
@@ -14,15 +15,18 @@
       margin: 0;
       min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
       background:
         linear-gradient(
           rgba(18, 27, 24, 0.48),
           rgba(18, 27, 24, 0.62)
         ),
         url("https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=2000&q=85");
+
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
+
       color: white;
     }
 
@@ -40,10 +44,13 @@
       text-align: center;
       padding: 56px 42px;
       border-radius: 28px;
+
       background: rgba(20, 30, 27, 0.42);
       border: 1px solid rgba(255, 255, 255, 0.18);
+
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
+
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
     }
 
@@ -76,11 +83,14 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
+
       margin-top: 32px;
       padding: 12px 18px;
+
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.15);
+
       font-size: 14px;
       color: rgba(255, 255, 255, 0.94);
     }
@@ -89,8 +99,11 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
+
       background: #bde7c6;
-      box-shadow: 0 0 0 5px rgba(189, 231, 198, 0.12);
+
+      box-shadow:
+        0 0 0 5px rgba(189, 231, 198, 0.12);
     }
 
     .footer-note {
@@ -119,10 +132,16 @@
 <body>
 
   <main class="page-shell">
-    <section class="hero">
-      <div class="eyebrow">Wengen · Switzerland</div>
 
-      <h1>Hotel Victoria Lauberhorn</h1>
+    <section class="hero">
+
+      <div class="eyebrow">
+        Wengen · Switzerland
+      </div>
+
+      <h1>
+        Hotel Victoria Lauberhorn
+      </h1>
 
       <p class="subtitle">
         Your digital concierge for rooms, dining, spa, arrival information,
@@ -137,102 +156,599 @@
       <div class="footer-note">
         Available anytime for hotel information and guest support.
       </div>
+
     </section>
+
   </main>
 
 
-     };
-  </script>
+  <!-- ===================================================== -->
+  <!-- ROOM BOOKING FORM EXTENSION -->
+  <!-- ===================================================== -->
 
   <script>
-    const BookingLinkExtension = {
-      name: "BookingLink",
+
+    const RoomBookingFormExtension = {
+
+      name: "RoomBookingForm",
       type: "response",
 
       match: ({ trace }) =>
-        trace.type === "BOOKING_LINK",
+        trace.type === "room_booking_form" ||
+        trace.payload?.name === "room_booking_form",
 
       render: ({ trace, element }) => {
-        const url = trace.payload?.url;
 
-        if (!url) return;
+        const form = document.createElement("form");
 
-        const wrapper = document.createElement("div");
-
-        wrapper.innerHTML = `
+        form.innerHTML = `
           <style>
-            .rates-card {
+
+            .booking-card {
               width: 100%;
               box-sizing: border-box;
-              padding: 18px;
-              background: #ffffff;
-              border: 1px solid rgba(20, 20, 20, 0.08);
-              border-radius: 16px;
-              box-shadow:
-                0 1px 2px rgba(0, 0, 0, 0.03),
-                0 8px 24px rgba(0, 0, 0, 0.06);
+              background: white;
+              border: 1px solid #e3e3e3;
+              border-radius: 14px;
+              padding: 16px;
               font-family: inherit;
             }
 
-            .rates-card-title {
-              margin: 0 0 6px;
-              font-size: 17px;
-              line-height: 1.3;
-              font-weight: 650;
-              color: #171717;
+            .booking-title {
+              font-size: 18px;
+              font-weight: 600;
+              margin-bottom: 16px;
             }
 
-            .rates-card-text {
-              margin: 0 0 16px;
-              font-size: 13.5px;
-              line-height: 1.55;
-              color: #686868;
+            .booking-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 12px;
             }
 
-            .rates-card-button {
+            .booking-field {
               display: flex;
-              align-items: center;
-              justify-content: space-between;
+              flex-direction: column;
+              gap: 6px;
+            }
+
+            .booking-field label {
+              font-size: 13px;
+              font-weight: 600;
+            }
+
+            .booking-field input,
+            .booking-field select {
               width: 100%;
               box-sizing: border-box;
-              padding: 13px 15px;
+              padding: 10px;
+              border: 1px solid #ccc;
+              border-radius: 8px;
+              background: white;
+              font: inherit;
+            }
+
+            .child-ages {
+              margin-top: 12px;
+            }
+
+            .booking-button {
+              width: 100%;
+              margin-top: 16px;
+              padding: 12px;
+
+              border: none;
               border-radius: 10px;
-              background: #1f1f1f;
-              color: #ffffff !important;
-              text-decoration: none;
-              font-size: 13.5px;
+
+              font: inherit;
               font-weight: 600;
+
+              cursor: pointer;
+            }
+
+          </style>
+
+
+          <div class="booking-card">
+
+            <div class="booking-title">
+              Check availability
+            </div>
+
+
+            <div class="booking-grid">
+
+              <div class="booking-field">
+
+                <label>
+                  Check-in
+                </label>
+
+                <input
+                  type="date"
+                  name="checkin"
+                  required
+                />
+
+              </div>
+
+
+              <div class="booking-field">
+
+                <label>
+                  Check-out
+                </label>
+
+                <input
+                  type="date"
+                  name="checkout"
+                  required
+                />
+
+              </div>
+
+
+              <div class="booking-field">
+
+                <label>
+                  Adults
+                </label>
+
+                <select name="adults">
+
+                  <option value="1">
+                    1
+                  </option>
+
+                  <option value="2" selected>
+                    2
+                  </option>
+
+                  <option value="3">
+                    3
+                  </option>
+
+                  <option value="4">
+                    4
+                  </option>
+
+                  <option value="5">
+                    5
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="booking-field">
+
+                <label>
+                  Children
+                </label>
+
+                <select name="children">
+
+                  <option value="0" selected>
+                    0
+                  </option>
+
+                  <option value="1">
+                    1
+                  </option>
+
+                  <option value="2">
+                    2
+                  </option>
+
+                  <option value="3">
+                    3
+                  </option>
+
+                  <option value="4">
+                    4
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+            <div class="child-ages"></div>
+
+
+            <button
+              type="submit"
+              class="booking-button"
+            >
+              View rooms & rates
+            </button>
+
+          </div>
+        `;
+
+
+        const childrenSelect =
+          form.querySelector('[name="children"]');
+
+
+        const childAgesContainer =
+          form.querySelector(".child-ages");
+
+
+        function renderChildAges() {
+
+          const count =
+            Number(childrenSelect.value);
+
+          childAgesContainer.innerHTML = "";
+
+
+          if (count === 0) {
+            return;
+          }
+
+
+          const grid =
+            document.createElement("div");
+
+          grid.className =
+            "booking-grid";
+
+
+          for (let i = 0; i < count; i++) {
+
+            const field =
+              document.createElement("div");
+
+            field.className =
+              "booking-field";
+
+
+            const label =
+              document.createElement("label");
+
+            label.textContent =
+              `Child ${i + 1} age`;
+
+
+            const select =
+              document.createElement("select");
+
+            select.name =
+              `child_age_${i}`;
+
+
+            for (let age = 0; age <= 17; age++) {
+
+              const option =
+                document.createElement("option");
+
+              option.value =
+                String(age);
+
+              option.textContent =
+                String(age);
+
+              select.appendChild(option);
+            }
+
+
+            field.appendChild(label);
+
+            field.appendChild(select);
+
+            grid.appendChild(field);
+          }
+
+
+          childAgesContainer.appendChild(grid);
+        }
+
+
+        childrenSelect.addEventListener(
+          "change",
+          renderChildAges
+        );
+
+
+        form.addEventListener(
+          "submit",
+
+          (event) => {
+
+            event.preventDefault();
+
+
+            const checkin =
+              form.querySelector(
+                '[name="checkin"]'
+              ).value;
+
+
+            const checkout =
+              form.querySelector(
+                '[name="checkout"]'
+              ).value;
+
+
+            const adults =
+              form.querySelector(
+                '[name="adults"]'
+              ).value;
+
+
+            const ageFields =
+              form.querySelectorAll(
+                '[name^="child_age_"]'
+              );
+
+
+            const childrenAges =
+              Array.from(ageFields).map(
+                field => field.value
+              );
+
+
+            if (!checkin || !checkout) {
+              return;
+            }
+
+
+            const button =
+              form.querySelector(
+                ".booking-button"
+              );
+
+
+            button.disabled = true;
+
+            button.textContent =
+              "Search ready ✓";
+
+
+            form
+              .querySelectorAll(
+                "input, select"
+              )
+              .forEach((field) => {
+
+                field.disabled = true;
+
+              });
+
+
+            window.voiceflow.chat.interact({
+
+              type:
+                "room_booking_submitted",
+
+              payload: {
+
+                checkin:
+                  checkin,
+
+                checkout:
+                  checkout,
+
+                adults:
+                  adults,
+
+                children_ages:
+                  childrenAges.join(",")
+
+              }
+
+            });
+
+          }
+
+        );
+
+
+        element.appendChild(form);
+
+      }
+
+    };
+
+  </script>
+
+
+  <!-- ===================================================== -->
+  <!-- PREMIUM ROOMS & RATES LINK EXTENSION -->
+  <!-- ===================================================== -->
+
+  <script>
+
+    const BookingLinkExtension = {
+
+      name:
+        "BookingLink",
+
+      type:
+        "response",
+
+
+      match: ({ trace }) =>
+        trace.type ===
+        "BOOKING_LINK",
+
+
+      render: ({ trace, element }) => {
+
+        const url =
+          trace.payload?.url;
+
+
+        if (!url) {
+          return;
+        }
+
+
+        const wrapper =
+          document.createElement("div");
+
+
+        wrapper.innerHTML = `
+          <style>
+
+            .rates-card {
+              width: 100%;
+              box-sizing: border-box;
+
+              padding: 18px;
+
+              background:
+                linear-gradient(
+                  145deg,
+                  #ffffff 0%,
+                  #fafaf9 100%
+                );
+
+              border:
+                1px solid rgba(20, 20, 20, 0.08);
+
+              border-radius: 16px;
+
+              box-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.03),
+                0 8px 24px rgba(0, 0, 0, 0.06);
+
+              font-family: inherit;
+            }
+
+
+            .rates-card-title {
+              margin:
+                0 0 6px;
+
+              font-size:
+                17px;
+
+              line-height:
+                1.3;
+
+              font-weight:
+                650;
+
+              color:
+                #171717;
+            }
+
+
+            .rates-card-text {
+              margin:
+                0 0 16px;
+
+              font-size:
+                13.5px;
+
+              line-height:
+                1.55;
+
+              color:
+                #686868;
+            }
+
+
+            .rates-card-button {
+              display:
+                flex;
+
+              align-items:
+                center;
+
+              justify-content:
+                space-between;
+
+              width:
+                100%;
+
+              box-sizing:
+                border-box;
+
+              padding:
+                13px 15px;
+
+              border-radius:
+                10px;
+
+              background:
+                #1f1f1f;
+
+              color:
+                #ffffff !important;
+
+              text-decoration:
+                none;
+
+              font-size:
+                13.5px;
+
+              font-weight:
+                600;
+
               transition:
                 transform 150ms ease,
                 box-shadow 150ms ease,
                 background 150ms ease;
             }
 
+
             .rates-card-button:hover {
-              background: #2b2b2b;
-              transform: translateY(-1px);
-              box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+
+              background:
+                #2b2b2b;
+
+              transform:
+                translateY(-1px);
+
+              box-shadow:
+                0 6px 16px
+                rgba(0, 0, 0, 0.12);
+
             }
+
 
             .rates-card-arrow {
-              font-size: 16px;
-              line-height: 1;
-              transition: transform 150ms ease;
+
+              font-size:
+                16px;
+
+              line-height:
+                1;
+
+              transition:
+                transform 150ms ease;
+
             }
 
-            .rates-card-button:hover .rates-card-arrow {
-              transform: translateX(3px);
+
+            .rates-card-button:hover
+            .rates-card-arrow {
+
+              transform:
+                translateX(3px);
+
             }
+
           </style>
 
+
           <div class="rates-card">
+
             <div class="rates-card-title">
               Rooms &amp; rates
             </div>
 
+
             <div class="rates-card-text">
               View the available rooms and current rates for your selected dates.
             </div>
+
 
             <a
               class="rates-card-button"
@@ -240,67 +756,105 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>View rooms &amp; rates</span>
-              <span class="rates-card-arrow">→</span>
+
+              <span>
+                View rooms &amp; rates
+              </span>
+
+              <span class="rates-card-arrow">
+                →
+              </span>
+
             </a>
+
           </div>
         `;
 
+
         element.appendChild(wrapper);
+
       }
+
     };
+
   </script>
 
+
+  <!-- ===================================================== -->
+  <!-- VOICEFLOW WIDGET -->
+  <!-- ===================================================== -->
 
   <script type="text/javascript">
 
     (function(d, t) {
 
-      var v = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
+      var v =
+        d.createElement(t),
+
+          s =
+        d.getElementsByTagName(t)[0];
 
 
       v.onload = function() {
 
+
         window.voiceflow.chat.load({
 
           verify: {
+
             projectID:
               "6a67b2a798f0eb571d99627f"
+
           },
+
 
           url:
             "https://general-runtime.voiceflow.com",
 
+
           voice: {
+
             url:
               "https://runtime-api.voiceflow.com"
+
           },
 
+
           assistant: {
-  extensions: [
-    RoomBookingFormExtension,
-    BookingLinkExtension
-  ]
-}
 
-});
+            extensions: [
 
-};
+              RoomBookingFormExtension,
 
+              BookingLinkExtension
 
-v.src =
-  "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+            ]
 
-v.type =
-  "text/javascript";
+          }
 
-s.parentNode.insertBefore(v, s);
+        });
+
+      };
 
 
-})(document, "script");
+      v.src =
+        "https://cdn.voiceflow.com/widget-next/bundle.mjs";
 
-</script>
+
+      v.type =
+        "text/javascript";
+
+
+      s.parentNode.insertBefore(
+        v,
+        s
+      );
+
+
+    })(document, "script");
+
+  </script>
+
 
 </body>
 </html>
